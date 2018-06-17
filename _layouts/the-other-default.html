@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>{{ page.title }}</title>
+
+   <!-- Remember to change the style links for Jekyll -->
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="../css/syntax.css" type="text/css" />
+
+</head>
+<body>
+
+<div class="site">
+  <div class="header">
+    <div class="title sizer-mid">
+      <a href="{{ site.baseurl }}/">Amblygon Design</a>
+    </div>
+  </div>
+
+  <div class = "content">
+    <!--Content - To be replaced with {{content}} -->
+    <div class = "sol-question">
+      <div class = "sizer-mid">
+      <h1 id="736b-taxes">736B. Taxes</h1>
+
+        <p>Mr. Funt now lives in a country with a very specific tax laws. The total income of mr. Funt during this year is equal to n (n ≥ 2) burles and the amount of tax he has to pay is calculated as the maximum divisor of n (not equal to n, of course). For example, if n = 6 then Funt has to pay 3 burles, while for n = 25 he needs to pay 5 and if n = 2 he pays only 1 burle.</p>
+
+        <p>As Mr. Funt is a very opportunistic person he wants to cheat a bit. In particular, he wants to split the initial n in several parts n<sub>1</sub> + n<sub>2</sub> + … + n<sub>k</sub> = n (here k is arbitrary, even k = 1 is allowed) and pay the taxes for each part separately. He can’t make some part equal to 1 because it will reveal him. So, the condition ni ≥ 2 should hold for all i from 1 to k.</p>
+
+        <p>Ostap Bender wonders, how many money Funt has to pay (i.e. minimal) if he chooses and optimal way to split n in parts.</p>
+      </div>
+    </div>
+    <div class="sol-hint">
+      <div class = "sizer-mid">
+        <h2 id="hints">Hints</h2>
+        <ol>
+        <li><p><a href="https://en.wikipedia.org/wiki/Goldbach%27s_conjecture">Goldbach’s Conjecture</a> states every even number greater than 2 can be represented as the sum of two primes.</p>
+
+        <li><p>An odd number cannot be the sum of two other odd numbers.</p>
+
+        <li><p>2 is the only even prime number. Hence, there’s only a single way an odd number can be a sum of two primes.</p>
+        </ol>
+      </div>
+    </div>
+    <div class = "sol-solution">
+      <div class = "sizer-mid">
+        <h2 id="solution">Solution</h2>
+
+        <p>One can come to a conclusion easily that the tax becomes minimal when we represent Mr. Funt’s income as the sum of the largest possible primes. Primes, as with the maximal divisor as 1, stand as the best in for tax minimisation.</p>
+
+        <p>Hence, if the input is prime, the output is 1. <a href="http://planetmath.org/howtofindwhetheragivennumberisprimeornot">How to check if a number is prime?</a></p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (isprime(n)) cout &lt;&lt; 1;</code></pre></div></div>
+
+        <p>Goldbach’s conjecture states all even numbers greater than 2 can be represented as the sum of primes. Hence, any even number input other than 2 can produce an output of 2. [Read about Goldbach’s conjecture]</p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (n%2 == 0) cout &lt;&lt; 2;</code></pre></div></div>
+
+        <p>For all other numbers (odd), we can check if they can be represented as the sum of two primes - true only if (n - 2) is prime, as an odd number can only be represented as the sum of an odd and another even number, with 2 as the only even prime.</p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>else if (isprime(n - 2)) cout &lt;&lt; 2;</code></pre></div></div>
+
+        <p>All other odd numbers can be considered as the sum of 3 primes - 3 and the two primes that constitute the even number, (n - 3).</p>
+      </div>
+    </div>
+    <div class="sol-code sizer-mid">
+      <h2 id="code">Code</h2>
+      <figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">#include</span><span class="o">&lt;</span><span class="n">bits</span><span class="o">/</span><span class="n">stdc</span><span class="o">++</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+      <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+      <span class="cp">#define ll long long
+      #define f(i, start, count) for (i = start;i &lt; count;i++)
+      </span>
+      <span class="kt">int</span> <span class="nf">isprime</span><span class="p">(</span><span class="n">ll</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">ll</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+          <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+          <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">ios_base</span><span class="o">::</span><span class="n">sync_with_stdio</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+          <span class="n">cin</span><span class="p">.</span><span class="n">tie</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+
+          <span class="n">ll</span> <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+          <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+          <span class="c1">//cases where 1
+      </span>    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>
+          <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isprime</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>
+          <span class="c1">//cases where 2
+      </span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isprime</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="c1">//case where 3
+      </span>    <span class="k">else</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">;</span>
+
+          <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="p">}</span></code></pre></figure>
+    </div>
+  </div>
+
+</div>
+<div class="footer">
+</div>
+</div>
+
+</body>
+</html>
